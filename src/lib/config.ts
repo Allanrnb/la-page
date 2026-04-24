@@ -1,16 +1,27 @@
 /**
  * WordPress headless CMS base URL.
- * Set NEXT_PUBLIC_WP_BASE_URL in .env.local for local dev,
- * and in the deployment environment for production.
+ *
+ * Intentionally NOT prefixed with NEXT_PUBLIC_ — this value is only ever
+ * read in server-side code (Server Components, Route Handlers). Keeping it
+ * server-only prevents the CMS origin from being exposed to the browser.
+ *
+ * Set WORDPRESS_API_URL in .env.local for local dev and in the deployment
+ * environment for production.
  *
  * Expected format: https://cms.example.com (no trailing slash)
  */
-export const WP_BASE_URL = process.env.NEXT_PUBLIC_WP_BASE_URL ?? "";
+export const WP_BASE_URL = process.env.WORDPRESS_API_URL ?? "";
+
+/**
+ * ISR revalidation window (seconds) used by all WordPress fetch calls.
+ * Centralised here so cache behaviour can be tuned in one place.
+ */
+export const REVALIDATE_TIME = 60;
 
 /**
  * Firebase project configuration.
- * All values are read from environment variables so that no credentials
- * are committed to the repository.
+ * NEXT_PUBLIC_ prefix is intentional: Firebase config is embedded in the
+ * client bundle by design. Real security is enforced by Firebase Security Rules.
  */
 export const FIREBASE_CONFIG = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY ?? "",
