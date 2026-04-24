@@ -1,23 +1,23 @@
 import type { Post } from "@/types/post";
-import { MOCK_POSTS } from "@/services/wordpress/mocks";
+import * as api from "@/services/wordpress/api";
+import { mapPost, mapPosts } from "@/services/wordpress/mapper";
 
 export async function getLatestPosts(limit = 10): Promise<Post[]> {
-  return MOCK_POSTS.slice(0, limit);
+  const raw = await api.fetchLatestPosts(limit);
+  return mapPosts(raw);
 }
 
 export async function getPostBySlug(slug: string): Promise<Post | null> {
-  return MOCK_POSTS.find((post) => post.slug === slug) ?? null;
+  const raw = await api.fetchPostBySlug(slug);
+  return raw ? mapPost(raw) : null;
 }
 
 export async function getPostsByCategory(categorySlug: string): Promise<Post[]> {
-  return MOCK_POSTS.filter((post) => post.category.slug === categorySlug);
+  const raw = await api.fetchPostsByCategory(categorySlug);
+  return mapPosts(raw);
 }
 
 export async function searchPosts(query: string): Promise<Post[]> {
-  const q = query.toLowerCase();
-  return MOCK_POSTS.filter(
-    (post) =>
-      post.title.toLowerCase().includes(q) ||
-      post.excerpt.toLowerCase().includes(q)
-  );
+  const raw = await api.fetchSearchPosts(query);
+  return mapPosts(raw);
 }
