@@ -14,7 +14,7 @@ const NAV_ITEMS = [
 export default function Header() {
   return (
     <header className="border-b border-zinc-200/80 bg-white">
-      <div className="mx-auto grid w-full max-w-[1200px] grid-cols-3 items-center px-5 py-5 md:px-8 lg:flex lg:items-center lg:justify-between">
+      <div className="mx-auto grid w-full max-w-[1200px] grid-cols-3 items-center px-5 py-3 md:px-8 lg:flex lg:items-center lg:justify-between lg:py-5">
         <div className="flex items-center lg:hidden">
           <button
             type="button"
@@ -44,8 +44,9 @@ export default function Header() {
           <Image
             src="/logo/la-page.svg"
             alt="La Page"
-            width={148}
-            height={34}
+            width={914}
+            height={337}
+            className="h-12 w-auto lg:h-16"
             priority
           />
         </Link>
