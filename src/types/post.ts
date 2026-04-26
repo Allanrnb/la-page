@@ -3,14 +3,21 @@ import type { Category } from "@/types/category";
 import type { Tag } from "@/types/tag";
 
 export interface Post {
-  // Core identity — always present, never optional
+  // Core identity
   id: string;
-  title: string;
   slug: string;
-  content: string;
+  date: string;
 
-  // Rich fields — required but may be empty strings
+  // Plain text (for cards/lists)
+  title: string;
   excerpt: string;
+
+  // HTML (for post page)
+  titleHtml: string;
+  excerptHtml: string;
+  contentHtml: string;
+
+  // Compatibility fields still used in current UI layer
   publishedAt: string;
   isFeatured: boolean;
   category: Category;

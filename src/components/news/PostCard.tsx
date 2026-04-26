@@ -56,7 +56,7 @@ export default function PostCard({
             <h3 className="font-serif text-2xl font-semibold leading-tight tracking-tight text-zinc-950">
               {post.title}
             </h3>
-            <p className="max-w-[60ch] text-sm leading-relaxed text-zinc-600">
+            <p className="max-w-[60ch] text-sm leading-relaxed text-zinc-600 line-clamp-3">
               {post.excerpt}
             </p>
             <p className="text-[11px] uppercase tracking-[0.12em] text-zinc-500">
@@ -91,7 +91,7 @@ export default function PostCard({
           <h3 className="max-w-[28ch] font-serif text-3xl font-semibold leading-tight tracking-tight text-zinc-950">
             {post.title}
           </h3>
-          <p className="max-w-[62ch] text-base leading-relaxed text-zinc-600">
+          <p className="max-w-[62ch] text-base leading-relaxed text-zinc-600 line-clamp-3">
             {post.excerpt}
           </p>
           <p className="text-[11px] uppercase tracking-[0.12em] text-zinc-500">

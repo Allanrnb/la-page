@@ -50,6 +50,11 @@ export function mapPost(raw: WpRawPost): Post {
   const rawTags = embedded?.["wp:term"]?.[1] ?? [];
 
   const primaryCategory = rawCategories[0];
+  const cleanExcerpt = stripHtml(raw.excerpt.rendered);
+  const excerpt =
+    cleanExcerpt.length > 200
+      ? `${cleanExcerpt.slice(0, 200).trim()}...`
+      : cleanExcerpt;
 
   const author: Author = rawAuthor
     ? {
@@ -66,14 +71,17 @@ export function mapPost(raw: WpRawPost): Post {
   return {
     id: String(raw.id),
     slug: raw.slug,
+    date: raw.date,
     publishedAt: raw.date,
     isFeatured: raw.sticky,
 
-    // Strip tags from rendered fields; content is kept as HTML intentionally
-    // so the UI can render it with a sanitised HTML parser.
+    // Plain text fields for cards/lists
     title: stripHtml(raw.title.rendered),
-    excerpt: stripHtml(raw.excerpt.rendered),
-    content: raw.content.rendered,
+    excerpt,
+    // HTML fields for post detail rendering
+    titleHtml: raw.title.rendered,
+    excerptHtml: raw.excerpt.rendered,
+    contentHtml: raw.content.rendered,
 
     category: primaryCategory
       ? {

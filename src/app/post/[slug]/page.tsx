@@ -8,19 +8,6 @@ interface PostPageProps {
   params: Promise<{ slug: string }>;
 }
 
-function decodeHtmlContent(html: string): string {
-  if (!html.includes("&lt;") && !html.includes("&#")) {
-    return html;
-  }
-
-  return html
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#039;/g, "'")
-    .replace(/&amp;/g, "&");
-}
-
 function formatPublishedDate(date: string): string {
   const parsed = new Date(date);
 
@@ -53,24 +40,26 @@ export default async function PostPage({ params }: PostPageProps) {
   ).slice(0, 8);
 
   const featuredImage = post.featuredImage ?? "/images/placeholder.jpg";
-  const renderedContent = decodeHtmlContent(post.content);
 
   return (
     <section className="mx-auto w-full max-w-[1240px] px-6 pb-20 pt-8">
       <div className="grid grid-cols-12 gap-12">
-        <article className="col-span-8">
+        <article className="col-span-8 overflow-hidden">
           <header className="mb-10 border-b border-zinc-200 pb-8">
             <p className="mb-3 text-xs uppercase tracking-[0.16em] text-zinc-500">
               {post.category.name}
             </p>
 
-            <h1 className="max-w-[22ch] font-serif text-6xl leading-[1.08] tracking-tight text-zinc-950">
-              {post.title}
-            </h1>
+            <h1
+              className="max-w-[22ch] font-serif text-6xl leading-[1.08] tracking-tight text-zinc-950"
+              dangerouslySetInnerHTML={{ __html: post.titleHtml }}
+            />
 
-            <p className="mt-6 max-w-[68ch] text-lg leading-relaxed text-zinc-600">
+            <p className="mt-4 max-w-[640px] text-lg leading-relaxed text-neutral-600 break-words">
               {post.excerpt}
             </p>
+
+            <div className="mt-6 border-t border-neutral-200" />
 
             <div className="mt-7 flex items-center gap-5 text-xs uppercase tracking-[0.12em] text-zinc-500">
               <span>{formatPublishedDate(post.publishedAt)}</span>
@@ -90,10 +79,12 @@ export default async function PostPage({ params }: PostPageProps) {
             />
           </div>
 
-          <div
-            className="prose prose-neutral mt-8 max-w-[720px] leading-relaxed prose-headings:font-serif prose-headings:tracking-tight"
-            dangerouslySetInnerHTML={{ __html: renderedContent }}
-          />
+          <div className="mt-8 max-w-[720px] overflow-hidden">
+            <div
+              className="prose prose-neutral mt-10 max-w-none break-words leading-relaxed prose-headings:font-serif prose-headings:tracking-tight"
+              dangerouslySetInnerHTML={{ __html: post.contentHtml }}
+            />
+          </div>
         </article>
 
         <aside className="col-span-4 space-y-12">
