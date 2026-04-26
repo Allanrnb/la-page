@@ -35,7 +35,7 @@ export default function PostCard({
     return (
       <article className={className}>
         <Link
-          href={`/noticia/${post.slug}`}
+          href={`/post/${post.slug}`}
           className="group grid grid-cols-[180px_1fr] items-start gap-5"
           aria-label={`Ler matéria: ${post.title}`}
         >
@@ -72,7 +72,7 @@ export default function PostCard({
     return (
       <article className={className}>
         <Link
-          href={`/noticia/${post.slug}`}
+          href={`/post/${post.slug}`}
           className="group block space-y-4"
           aria-label={`Ler matéria: ${post.title}`}
         >
@@ -105,7 +105,7 @@ export default function PostCard({
   return (
     <article className={className}>
       <Link
-        href={`/noticia/${post.slug}`}
+        href={`/post/${post.slug}`}
         className="group block space-y-3"
         aria-label={`Ler matéria: ${post.title}`}
       >

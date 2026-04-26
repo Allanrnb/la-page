@@ -45,7 +45,7 @@ export default function Hero({ post }: HeroProps) {
             </p>
 
             <Link
-              href={`/noticia/${post.slug}`}
+              href={`/post/${post.slug}`}
               className="inline-flex items-center border border-black px-4 py-2 text-sm uppercase tracking-widest text-zinc-900 transition hover:bg-black hover:text-white"
             >
               Ler mais

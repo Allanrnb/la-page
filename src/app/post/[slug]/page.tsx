@@ -1,3 +1,4 @@
+/* biome-ignore-all lint/security/noDangerouslySetInnerHtml: WordPress post body must render trusted CMS HTML */
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -5,6 +6,19 @@ import { getLatestPosts, getPostBySlug } from "@/services/wordpress";
 
 interface PostPageProps {
   params: Promise<{ slug: string }>;
+}
+
+function decodeHtmlContent(html: string): string {
+  if (!html.includes("&lt;") && !html.includes("&#")) {
+    return html;
+  }
+
+  return html
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'")
+    .replace(/&amp;/g, "&");
 }
 
 function formatPublishedDate(date: string): string {
@@ -39,6 +53,7 @@ export default async function PostPage({ params }: PostPageProps) {
   ).slice(0, 8);
 
   const featuredImage = post.featuredImage ?? "/images/placeholder.jpg";
+  const renderedContent = decodeHtmlContent(post.content);
 
   return (
     <section className="mx-auto w-full max-w-[1240px] px-6 pb-20 pt-8">
@@ -76,8 +91,8 @@ export default async function PostPage({ params }: PostPageProps) {
           </div>
 
           <div
-            className="article-content max-w-[680px]"
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            className="prose prose-neutral mt-8 max-w-[720px] leading-relaxed prose-headings:font-serif prose-headings:tracking-tight"
+            dangerouslySetInnerHTML={{ __html: renderedContent }}
           />
         </article>
 
