@@ -9,9 +9,6 @@ const CATEGORY_SECTIONS = [
   { label: "Economia", slug: "economia" },
 ];
 
-const DEBUG_BYPASS_CATEGORY_FILTERING =
-  process.env.HOMEPAGE_BYPASS_CATEGORY_FILTERING === "true";
-
 function uniqueById(posts: Awaited<ReturnType<typeof getLatestPosts>>) {
   const seen = new Set<string>();
   return posts.filter((post) => {
@@ -21,23 +18,8 @@ function uniqueById(posts: Awaited<ReturnType<typeof getLatestPosts>>) {
   });
 }
 
-function getCategoryBlockPosts(
-  categoryPosts: Awaited<ReturnType<typeof getLatestPosts>>,
-  fallbackPool: Awaited<ReturnType<typeof getLatestPosts>>
-) {
-  const uniqueCategory = uniqueById(categoryPosts);
-  const uniqueFallback = uniqueById(fallbackPool);
-
-  const picked = [...uniqueCategory];
-
-  for (const post of uniqueFallback) {
-    if (picked.length >= 4) break;
-    if (!picked.some((item) => item.id === post.id)) {
-      picked.push(post);
-    }
-  }
-
-  return picked.slice(0, 4);
+function getCategoryBlockPosts(categoryPosts: Awaited<ReturnType<typeof getLatestPosts>>) {
+  return uniqueById(categoryPosts).slice(0, 4);
 }
 
 function SectionHeading({ title }: { title: string }) {
@@ -75,23 +57,17 @@ export default async function HomePage() {
     politicaPosts: politicaPosts.length,
     tecnologiaPosts: tecnologiaPosts.length,
     economiaPosts: economiaPosts.length,
-    bypassCategoryFiltering: DEBUG_BYPASS_CATEGORY_FILTERING,
   });
 
   const categoryBlocks = CATEGORY_SECTIONS.map((section) => {
-    const sourcePosts = DEBUG_BYPASS_CATEGORY_FILTERING
-      ? posts
-      : categoryDataMap[section.slug as keyof typeof categoryDataMap];
-
-    const postsForSection = getCategoryBlockPosts(
-      sourcePosts,
-      posts
-    );
+    const sourcePosts = categoryDataMap[section.slug as keyof typeof categoryDataMap];
+    const postsForSection = getCategoryBlockPosts(sourcePosts);
 
     console.info(`[home] section "${section.slug}"`, {
       sourceCount: sourcePosts.length,
       renderedCount: postsForSection.length,
       postIds: postsForSection.map((post) => post.id),
+      renderedCategories: postsForSection.map((post) => post.category.slug),
     });
 
     return { ...section, posts: postsForSection };
