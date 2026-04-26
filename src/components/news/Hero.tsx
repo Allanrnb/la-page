@@ -25,13 +25,13 @@ export default function Hero({ post }: HeroProps) {
 
   return (
     <section className="mx-auto mt-10 w-full max-w-[1200px] px-4 md:mt-16">
-      <article className="grid items-start gap-8 py-6 lg:grid-cols-[1.2fr_0.8fr] lg:gap-12 lg:py-10">
-        <div className="order-2 space-y-4 lg:order-1 md:space-y-6">
+      <article className="grid grid-cols-1 items-start gap-8 pt-6 pb-3 lg:grid-cols-12 lg:gap-12 lg:pt-10 lg:pb-4">
+        <div className="order-2 space-y-4 lg:order-1 lg:col-span-7 md:space-y-6">
           <p className="mb-2 text-xs uppercase tracking-[0.16em] text-zinc-500">
             {post.category.name}
           </p>
 
-          <h1 className="max-w-[24ch] font-serif text-4xl leading-[1.1] text-zinc-950 md:text-5xl lg:max-w-[26ch] lg:text-6xl">
+          <h1 className="max-w-[24ch] font-serif text-4xl leading-[1.1] tracking-tight text-zinc-950 md:text-5xl lg:max-w-[26ch] lg:text-6xl">
             {post.title}
           </h1>
 
@@ -53,8 +53,8 @@ export default function Hero({ post }: HeroProps) {
           </div>
         </div>
 
-        <div className="order-1 lg:order-2">
-          <div className="relative h-[220px] overflow-hidden rounded-sm sm:h-[260px] md:h-[420px] lg:h-[480px]">
+        <div className="order-1 lg:order-2 lg:col-span-5">
+          <div className="relative h-[220px] overflow-hidden rounded-lg shadow-sm sm:h-[260px] md:h-[440px] lg:h-[520px]">
             <Image
               src={imageSrc}
               alt={post.title}

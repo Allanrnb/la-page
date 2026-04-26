@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const NAV_ITEMS = [
   { label: "Início", href: "/" },
@@ -12,9 +15,32 @@ const NAV_ITEMS = [
 ];
 
 export default function Header() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <header className="border-b border-zinc-200/80 bg-white">
-      <div className="mx-auto grid w-full max-w-[1200px] grid-cols-3 items-center px-5 py-3 md:px-8 lg:flex lg:items-center lg:justify-between lg:py-5">
+    <header
+      className={`sticky top-0 z-50 border-b border-zinc-200/80 bg-white transition-all duration-300 ${
+        isScrolled ? "shadow-sm" : "shadow-none"
+      }`}
+    >
+      <div
+        className={`mx-auto grid w-full max-w-[1200px] grid-cols-3 items-center px-5 transition-all duration-300 md:px-8 lg:flex lg:items-center lg:justify-between ${
+          isScrolled ? "py-3" : "py-6"
+        }`}
+      >
         <div className="flex items-center lg:hidden">
           <button
             type="button"
