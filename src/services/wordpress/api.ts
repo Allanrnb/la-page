@@ -77,13 +77,22 @@ export async function fetchPostsByCategory(
   const categories = await wpFetch<{ id: number }[]>(
     `${WP_API}/categories?slug=${encodeURIComponent(categorySlug)}&per_page=1`
   );
+  console.info(
+    `[wordpress] categories lookup slug="${categorySlug}" -> ids=${categories
+      .map((c) => c.id)
+      .join(",") || "none"}`
+  );
 
   const categoryId = categories[0]?.id;
   if (!categoryId) return [];
 
-  return wpFetch<WpRawPost[]>(
+  const posts = await wpFetch<WpRawPost[]>(
     `${WP_API}/posts?_embed&categories=${categoryId}`
   );
+  console.info(
+    `[wordpress] posts by category slug="${categorySlug}" id=${categoryId} count=${posts.length}`
+  );
+  return posts;
 }
 
 export async function fetchSearchPosts(query: string): Promise<WpRawPost[]> {
