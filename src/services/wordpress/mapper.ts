@@ -24,14 +24,19 @@ const FALLBACK_IMAGE = "/placeholder.jpg";
 function stripHtml(html: string): string {
   return html
     .replace(/<[^>]+>/g, "")
+    .replace(/&nbsp;|&#160;/g, " ")
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
+    .replace(/&ldquo;|&#8220;|&#x201C;/gi, '"')
+    .replace(/&rdquo;|&#8221;|&#x201D;/gi, '"')
+    .replace(/&rsquo;|&#8217;|&#x2019;/gi, "'")
+    .replace(/&ndash;|&#8211;|&#x2013;/gi, "–")
     .replace(/&#039;/g, "'")
     .replace(/&#8230;/g, "…")
-    .replace(/&#8211;/g, "–")
     .replace(/&#8212;/g, "—")
+    .replace(/\s+/g, " ")
     .trim();
 }
 
