@@ -27,7 +27,7 @@ export default function Hero({ post }: HeroProps) {
     <section className="mx-auto mt-10 w-full max-w-[1200px] px-4 md:mt-16">
       <article className="grid items-start gap-8 py-6 lg:grid-cols-[1.2fr_0.8fr] lg:gap-12 lg:py-10">
         <div className="order-2 space-y-4 lg:order-1 md:space-y-6">
-          <p className="text-xs uppercase tracking-[0.16em] text-zinc-500">
+          <p className="mb-2 text-xs uppercase tracking-[0.16em] text-zinc-500">
             {post.category.name}
           </p>
 
@@ -39,14 +39,14 @@ export default function Hero({ post }: HeroProps) {
             {post.excerpt}
           </p>
 
-          <div className="mt-6 flex items-center gap-4">
+          <div className="mt-6 flex items-center gap-5">
             <p className="text-xs uppercase tracking-[0.12em] text-zinc-500">
               {formatPublishedDate(post.publishedAt)}
             </p>
 
             <Link
               href={`/noticia/${post.slug}`}
-              className="inline-flex items-center border border-zinc-300 px-4 py-2 text-xs uppercase tracking-widest text-zinc-800 transition-colors duration-200 hover:border-zinc-900 hover:text-zinc-950"
+              className="inline-flex items-center border border-black px-4 py-2 text-sm uppercase tracking-widest text-zinc-900 transition hover:bg-black hover:text-white"
             >
               Ler mais
             </Link>
@@ -54,7 +54,7 @@ export default function Hero({ post }: HeroProps) {
         </div>
 
         <div className="order-1 lg:order-2">
-          <div className="relative h-[220px] overflow-hidden rounded-sm sm:h-[260px] md:h-[420px] lg:h-[460px]">
+          <div className="relative h-[220px] overflow-hidden rounded-sm sm:h-[260px] md:h-[420px] lg:h-[480px]">
             <Image
               src={imageSrc}
               alt={post.title}
