@@ -18,7 +18,7 @@ export default async function HomePage() {
           <span aria-hidden className="h-px w-full bg-zinc-200" />
         </div>
 
-        <div className="-mx-4 flex gap-5 overflow-x-auto px-4 pb-2 md:mx-0 md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:px-0 lg:grid-cols-4">
+        <div className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 scrollbar-hide md:mx-0 md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:px-0 lg:grid-cols-4">
           {rest.map((post) => (
             <NewsCard key={post.id} post={post} />
           ))}

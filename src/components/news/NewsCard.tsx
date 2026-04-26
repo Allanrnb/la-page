@@ -24,7 +24,7 @@ export default function NewsCard({ post }: NewsCardProps) {
   const imageSrc = post.featuredImage ?? "/images/placeholder.jpg";
 
   return (
-    <article className="min-w-[260px] shrink-0 md:min-w-0">
+    <article className="min-w-[280px] shrink-0 snap-start sm:min-w-[300px] md:min-w-0">
       <Link
         href={`/noticia/${post.slug}`}
         className="group block space-y-3"
