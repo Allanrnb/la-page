@@ -24,22 +24,22 @@ export default function Hero({ post }: HeroProps) {
   const imageSrc = post.featuredImage ?? "/images/placeholder.jpg";
 
   return (
-    <section className="mx-auto w-full max-w-[1200px] px-5 md:px-8">
-      <article className="grid items-start gap-8 py-6 lg:grid-cols-2 lg:gap-12 lg:py-10">
-        <div className="order-2 max-w-xl space-y-4 lg:order-1 md:space-y-6">
+    <section className="mx-auto mt-10 w-full max-w-[1200px] px-4 md:mt-16">
+      <article className="grid items-start gap-8 py-6 lg:grid-cols-[1.2fr_0.8fr] lg:gap-12 lg:py-10">
+        <div className="order-2 space-y-4 lg:order-1 md:space-y-6">
           <p className="text-xs uppercase tracking-[0.16em] text-zinc-500">
             {post.category.name}
           </p>
 
-          <h1 className="max-w-[20ch] font-serif text-2xl leading-snug text-zinc-950 sm:text-3xl md:text-5xl lg:text-6xl">
+          <h1 className="max-w-[24ch] font-serif text-4xl leading-[1.1] text-zinc-950 md:text-5xl lg:max-w-[26ch] lg:text-6xl">
             {post.title}
           </h1>
 
-          <p className="max-w-lg text-base leading-relaxed text-gray-600 md:text-lg">
+          <p className="mt-4 max-w-lg text-base leading-relaxed text-gray-600 md:mt-6 md:text-lg">
             {post.excerpt}
           </p>
 
-          <div className="flex items-center gap-4 pt-1">
+          <div className="mt-6 flex items-center gap-4">
             <p className="text-xs uppercase tracking-[0.12em] text-zinc-500">
               {formatPublishedDate(post.publishedAt)}
             </p>
@@ -54,7 +54,7 @@ export default function Hero({ post }: HeroProps) {
         </div>
 
         <div className="order-1 lg:order-2">
-          <div className="relative h-[220px] overflow-hidden rounded-sm sm:h-[260px] md:h-[400px]">
+          <div className="relative h-[220px] overflow-hidden rounded-sm sm:h-[260px] md:h-[420px] lg:h-[460px]">
             <Image
               src={imageSrc}
               alt={post.title}
